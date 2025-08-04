@@ -3,6 +3,8 @@ import FormCadastro from '../../components/FormProdutos'
 import { useRef } from 'react'
 import './CadastroProduto.css'
 import { v4 as uuidv4 } from 'uuid';
+import BuscarCadastro from '../../db/BuscarCadastro';
+import UsuarioLogado from '../../db/UsuarioLogado';
 
 const CadastroProduto = () => {
     const nome = useRef(null)
@@ -11,16 +13,19 @@ const CadastroProduto = () => {
     function cadastrar(e){
       e.preventDefault()
 
-      const usuarioLogado = JSON.parse(localStorage.getItem("logado")) 
+      const usuarioLogado = UsuarioLogado()
 
         const nomeProduto = nome.current.value
         const categoriaProduto = categoria.current.value
         const quantidadeProduto = quantidade.current.value
 
         if (nomeProduto && categoriaProduto && quantidadeProduto) {
-            const produtos = JSON.parse(localStorage.getItem("produtos")) || []
+            const produtos = BuscarCadastro()
+
             produtos.push({id:uuidv4(),cpfDoCriador:usuarioLogado.cpf, nome: nomeProduto, categoria: categoriaProduto, quantidade: quantidadeProduto})
+
             localStorage.setItem("produtos", JSON.stringify(produtos))
+            
             alert("Produto cadastrado com sucesso!")
             nome.current.value = ""
             categoria.current.value = ""

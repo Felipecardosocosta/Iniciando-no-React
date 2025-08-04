@@ -1,20 +1,23 @@
 import React from 'react'
 import { useState } from 'react'
 import './Produto.css'
+import Card from '../../components/card'
+import BuscarCadastro from '../../db/BuscarCadastro'
+import UsuarioLogado from '../../db/UsuarioLogado'
 
 const Produto = () => {
 
   
-  const [produtos,setProdutos]=useState(JSON.parse(localStorage.getItem("produtos")) || [])
+  const [produtos,setProdutos]=useState(BuscarCadastro())
 
-  const usuarioLogado = JSON.parse(localStorage.getItem("logado"))
+  const usuarioLogado = UsuarioLogado()
   const [idEditar, setIdEditar] = useState(null)
   const [itens, setItens] = useState({ nome: '', quantidade: '', categoria: '' })
 
 
   function inciarEdiçao(id) {
-    setProdutos(JSON.parse(localStorage.getItem("produtos"))|| [])
-    const usuarioLogado = JSON.parse(localStorage.getItem("logado"))
+    setProdutos(BuscarCadastro())
+    const usuarioLogado = UsuarioLogado()
     const produto = produtos.find(produto => produto.id === id)
     setItens(produto)
     setIdEditar(id)
@@ -38,13 +41,13 @@ const Produto = () => {
     
   }
   function ComfirmarEdiçao() {
-    setProdutos(JSON.parse(localStorage.getItem("produtos"))|| [])
+    setProdutos(BuscarCadastro())
     
     if (!itens.nome || !itens.categoria || !itens.quantidade) {
       return alert("Campos Vazios")
     }
 
-    const protudoEditado = [...produtos.filter(produto=> produto.id !==idEditar),itens]
+    const protudoEditado = [...produtos.filter(produto=> produto.id !==idEditar ? itens: produto)]
 
     setProdutos(prev=> ([...prev.filter(produto=> produto.id !==idEditar),itens]))
 
@@ -58,23 +61,26 @@ const Produto = () => {
   return (
 
     <div className="conteinerProdutos">
-      {JSON.parse(localStorage.getItem("logado")) && <div className="meusProdutos">
+      {UsuarioLogado() && <div className="meusProdutos">
         <h1>Meus Produtos</h1>
 
         {produtos.filter(produto => produto.cpfDoCriador === usuarioLogado.cpf).length > 0 ? produtos.map((produto) => {
           if (produto.cpfDoCriador === usuarioLogado.cpf) {
             return (
-              <div className="produto" key={produto.id}>
-                <h2>{produto.nome}</h2>
-                <p>Categoria: {produto.categoria}</p>
-                <p>Quantidade: {produto.quantidade}</p>
+              <Card
+                classs={"produto"} 
+                id={produto.id}
+                key={produto.id}
+                titulo={produto.nome}
+                categoria ={produto.categoria}
+                quantidade={produto.quantidade}
+                >
                 <div>
-
-
                 <button className='editar' onClick={() => inciarEdiçao(produto.id)} >Editar</button>
                 <button className='excluir' onClick={() => excluirProduto(produto.id)}>Excluir</button>
                 </div>
-              </div>
+
+              </Card>
             )
           }
           return null
@@ -85,15 +91,12 @@ const Produto = () => {
       <div className="todosProdutos">
         <h1>Todos Produtos</h1>
         <div className="cont-produtos">
-          {JSON.parse(localStorage.getItem("logado")) ? /*true1*/produtos.filter(produto => produto.cpfDoCriador !== usuarioLogado.cpf).length > 0 ? /*true2 */ produtos.map((produto) => {
+          {UsuarioLogado()? /*true1*/produtos.filter(produto => produto.cpfDoCriador !== usuarioLogado.cpf).length > 0 ? /*true2 */ produtos.map((produto) => {
             if (produto.cpfDoCriador !== usuarioLogado.cpf) {
 
               return(
-              <div className="produto" key={produto.id}>
-                <h2>{produto.nome}</h2>
-                <p>Categoria: {produto.categoria}</p>
-                <p>Quantidade: {produto.quantidade}</p>
-              </div>
+                <Card classs='produto' id={produto.id}  titulo={produto.nome}   categoria={produto.categoria} quantidade={produto.quantidade}/>
+              
               )
             }
             return null

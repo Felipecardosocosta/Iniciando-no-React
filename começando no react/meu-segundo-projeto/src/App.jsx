@@ -6,17 +6,17 @@ import './App.css'
 import Cadastro from './pages/Cadastro/Cadastro'
 import Produto from './pages/Produto/Produto'
 import CadastroProduto from './pages/CadastroDeProduto/CadastroProduto'
+import NavBar from './components/NavBarr/NavBar'
+import Perfil from './pages/Perfill/Perfil'
+import UsuarioLogado from './db/UsuarioLogado'
 
 
 
 function App() {
    const [logado,setLogado]= useState(false)
-   
-  
-   
 
    useEffect(()=>{
-    const usuario = JSON.parse(localStorage.getItem("logado"))
+    const usuario = UsuarioLogado()
     if (usuario) {
       setLogado(true)
       
@@ -26,22 +26,13 @@ function App() {
   return (
     
     <BrowserRouter>
-    <nav className='navPages' >
-      <ol>
-        {!logado && <li><NavLink className={({isActive})=> isActive? 'linkAtivo': 'linkNoAtivo'} to={'/'} >Login</NavLink></li>}
-        {/* {!logado && <li><NavLink className={({isActive})=> isActive? 'linkAtivo': 'linkNoAtivo'} to={'/cadastro'} >Cadastro</NavLink></li>} */}
-        {!!logado && <li><NavLink className={({isActive})=> isActive? 'linkAtivo': 'linkNoAtivo'} to={'/cadastroProduto'} element={<CadastroProduto/>}>Cadastro de Produtos</NavLink> </li>}
-        <li> <NavLink className={({isActive})=> isActive? 'linkAtivo': 'linkNoAtivo'} to={'/produto'} element={<Produto/>} >Produtos</NavLink> </li>
-
-      </ol>
-    </nav>
+    <NavBar logado={logado}/>
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/produto' element={<Produto /> } />
         <Route path='/cadastro' element={<Cadastro/>}/>
         <Route path='/cadastroProduto' element={<CadastroProduto/>}/>
-
-
+        <Route path='/perfil' element={<Perfil/>} />
       </Routes>
 
     </BrowserRouter>
