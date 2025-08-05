@@ -117,7 +117,7 @@ const Produto = () => {
           <div className="modal">
 
             <label>Nome
-              <input type="text" name="NomeProduto" value={itens.nome} onChange={(e) => setItens((prev) => ({ ...prev, nome: e.target.value }))} />
+              <input type="text" name="NomeProduto" value={itens.nome} onChange={(e) => setItens((prev) => (  { ...prev, nome: e.target.value }))} />
             </label>
 
 
