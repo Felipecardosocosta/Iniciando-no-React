@@ -52,11 +52,7 @@
   text-decoration: none;
   color: #285eb6;
   content: '';
-  position: relative;
-  width: 0;
   height: 2px;
-  bottom: 0;
-  left: 0%;
   transition: all .5s ease;
   padding-bottom: 4px;
 

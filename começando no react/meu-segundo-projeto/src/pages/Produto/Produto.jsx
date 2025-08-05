@@ -30,9 +30,7 @@ const Produto = () => {
     setProdutos(produtoExcluido)
     
     localStorage.setItem('produtos',JSON.stringify(produtoExcluido))
-   
-   
-
+  
   }
   function cancelarEdiçao() {
     setIdEditar(null)
@@ -56,8 +54,6 @@ const Produto = () => {
     setItens({ nome: '', quantidade: '', categoria: '' })
     
   }
-
-
   return (
 
     <div className="conteinerProdutos">

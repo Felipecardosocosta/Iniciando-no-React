@@ -25,7 +25,7 @@ function Login() {
         <h1>Login</h1>
         <div className="ContName">
           <label>Cpf: 
-            <input type="number" name="Cpf" value={userLogIn.cpf} onChange={(e) => setUserLogIn(prev=> ({...prev, cpf: e.target.value}))} placeholder="Cpf" />
+            <input type="number" name="Cpf" value={userLogIn.cpf} onChange={(e) => setUserLogIn(prev=> ({...prev, cpf: e.target.value}))} placeholder="Cpf" autoFocus />
           </label>
         </div>
         <div>

@@ -6,7 +6,7 @@ function FormCadastro(props){
         <h1>{props.titulo}</h1>
         <div>
         <label htmlFor={props.labelNomeId}>{props.labelNome}</label>
-        <input type="text" name={props.inputName} id={props.inputNomeId} ref={props.inputRefNome} />
+        <input type="text" name={props.inputName} id={props.inputNomeId} ref={props.inputRefNome} autoFocus/>
         </div>
         <div>
         <label htmlFor={props.labelCategoriaId}>{props.labelCategoriaNome}</label>
