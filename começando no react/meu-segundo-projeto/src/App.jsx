@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {BrowserRouter,Routes,Route, Link,NavLink, Navigate} from 'react-router-dom'
+import {BrowserRouter,Routes,Route, Link,NavLink, Navigate, RouterProvider} from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
 import Login from './pages/Login/Login'
 import './App.css'
@@ -9,6 +9,7 @@ import CadastroProduto from './pages/CadastroDeProduto/CadastroProduto'
 import NavBar from './components/NavBarr/NavBar'
 import Perfil from './pages/Perfill/Perfil'
 import UsuarioLogado from './db/UsuarioLogado'
+import router from './router/Router'
 
 
 
@@ -25,17 +26,10 @@ function App() {
 
   return (
     
-    <BrowserRouter>
+    <>
     <NavBar logado={logado}/>
-      <Routes>
-        <Route path='/' element={<Login />}/>
-        <Route path='/produto' element={<Produto /> } />
-        <Route path='/cadastro' element={<Cadastro/>}/>
-        <Route path='/cadastroProduto' element={<CadastroProduto/>}/>
-        <Route path='/perfil' element={<Perfil/>} />
-      </Routes>
-
-    </BrowserRouter>
+      <RouterProvider router={router}/>
+    </>
   )
 }
 
