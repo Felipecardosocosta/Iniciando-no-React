@@ -15,7 +15,6 @@ function Login() {
     if (ConfirmandoLog) {
       setUserLogIn({cpf:"",senha:""})
       window.location.href ="/produto"
-      
     }
   }
   return (

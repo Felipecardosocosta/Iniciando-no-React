@@ -13,7 +13,7 @@ const Perfil = () => {
       <h1>Nome: {usuario.name}</h1>
       <p>Cpf: {usuario.cpf} </p>
       <label>Idade: 
-      <input type="text" value={usuario.idade} onChange={(e)=> setUsuario((prev)=> ({...prev,idade:e.target.value})) } disabled={!editar? true: false}/>
+      <input type="text" value={usuario.idade} onChange={(e)=> setUsuario((prev)=> ({...prev,idade:e.target.value})) } disabled={!editar ? true: false}/>
       </label>
     </div>
   )
