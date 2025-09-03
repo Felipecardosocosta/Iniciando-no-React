@@ -1,6 +1,7 @@
 import React from 'react'
 
 function FormCadastro(props){
+    
   return (
     <form className={props.clases} onSubmit={props.func}>
         <h1>{props.titulo}</h1>
