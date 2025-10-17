@@ -18,7 +18,7 @@ async function criarLigacao() {
         port: 3306,
         database: "conta",
         user: 'root',
-        password: 'fd260316'
+        password: '******'
 
     })
     console.log("conectou com o banco");
