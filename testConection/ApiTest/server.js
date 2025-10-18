@@ -2,12 +2,16 @@ const express = require('express')
 
 const mysql = require('mysql2/promise')
 
+const cors = require('cors')
+
 const port = 3000
 
 const aplication = express()
 
 
 let conectar
+
+aplication.use(cors({origin: 'http://localhost:5173'}))
 
 aplication.use(express.json())
 
@@ -18,7 +22,7 @@ async function criarLigacao() {
         port: 3306,
         database: "conta",
         user: 'root',
-        password: '******'
+        password: '****'
 
     })
     console.log("conectou com o banco");
@@ -91,7 +95,7 @@ aplication.post('/user20%insert/', async (req, res) => {
         console.log(result);
 
     } catch (err) {
-        console.error(`usuario nao cadastrado ${err}`);
+        res.status(404).json(`usuario nao cadastrado ${err}`);
 
     }
 
@@ -106,10 +110,10 @@ aplication.put('/user/:id/modify', async (req, res) => {
 
     try {
         const [result] = await conectar.query(`
-            UPDATE usuario SET nome = ? WHERE id = ?
-            `, [nome, id])
+            UPDATE usuario SET nome = ? , idade = ? WHERE id = ?
+            `, [nome, idade,id])
 
-        res.status(200).json(result)
+        res.status(200).json({result: result, modificado: true})
 
     } catch (err) {
         console.error(`Deu merda ${err}`);
@@ -128,7 +132,10 @@ aplication.delete('/user/:id/delete', async (req, res) => {
             DELETE FROM usuario WHERE id = ?  
             `, [id])
 
-        res.status(200).json(resultados)
+        res.status(200).json({
+            modificado: true,
+            resultado: resultados
+        })
 
     } catch (err) {
 
